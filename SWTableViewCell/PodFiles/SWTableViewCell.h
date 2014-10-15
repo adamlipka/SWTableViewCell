@@ -37,6 +37,7 @@ typedef NS_ENUM(NSInteger, SWCellState)
 @interface SWTableViewCell : UITableViewCell
 
 @property (nonatomic) CGFloat innerMargin;
+@property (nonatomic, assign) SWCellState cellState; // The state of the cell within the scroll view, can be left, right or middle
 
 @property (nonatomic, copy) NSArray *leftUtilityButtons;
 @property (nonatomic, copy) NSArray *rightUtilityButtons;
