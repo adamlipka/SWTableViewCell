@@ -57,10 +57,10 @@
 - (void)setUtilityButtons:(NSArray *)utilityButtons
 {
     // if no width specified, use the default width
-    [self setUtilityButtons:utilityButtons WithButtonWidth:kUtilityButtonWidthDefault];
+    [self setUtilityButtons:utilityButtons WithButtonWidth:kUtilityButtonWidthDefault innerMargin:0];
 }
 
-- (void)setUtilityButtons:(NSArray *)utilityButtons WithButtonWidth:(CGFloat)width
+- (void)setUtilityButtons:(NSArray *)utilityButtons WithButtonWidth:(CGFloat)width innerMargin:(CGFloat)margin
 {
     for (UIButton *button in _utilityButtons)
     {
@@ -82,7 +82,7 @@
             if (!precedingView)
             {
                 // First button; pin it to the left edge.
-                [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[button]"
+                [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:[NSString stringWithFormat:@"H:|-%f-[button]", margin]
                                                                              options:0L
                                                                              metrics:nil
                                                                                views:NSDictionaryOfVariableBindings(button)]];
@@ -90,13 +90,13 @@
             else
             {
                 // Subsequent button; pin it to the right edge of the preceding one, with equal width.
-                [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[precedingView][button(==precedingView)]"
+                [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:[NSString stringWithFormat:@"H:[precedingView]-%f-[button(==precedingView)]", margin]
                                                                              options:0L
                                                                              metrics:nil
                                                                                views:NSDictionaryOfVariableBindings(precedingView, button)]];
             }
             
-            [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[button]|"
+            [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:[NSString stringWithFormat:@"V:|-%f-[button]-%f-|", margin, margin]
                                                                          options:0L
                                                                          metrics:nil
                                                                            views:NSDictionaryOfVariableBindings(button)]];
@@ -111,7 +111,7 @@
         }
         
         // Pin the last button to the right edge.
-        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[precedingView]|"
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:[NSString stringWithFormat:@"[precedingView]-%f-|", margin]
                                                                      options:0L
                                                                      metrics:nil
                                                                        views:NSDictionaryOfVariableBindings(precedingView)]];

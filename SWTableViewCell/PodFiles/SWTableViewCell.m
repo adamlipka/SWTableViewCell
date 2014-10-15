@@ -89,10 +89,10 @@ static NSString * const kTableViewCellContentView = @"UITableViewCellContentView
     // Add the cell scroll view to the cell
     UIView *contentViewParent = self;
     UIView *clipViewParent = self.cellScrollView;
-    if (![NSStringFromClass([[self.subviews objectAtIndex:0] class]) isEqualToString:kTableViewCellContentView])
+    if (![NSStringFromClass([(self.subviews)[0] class]) isEqualToString:kTableViewCellContentView])
     {
         // iOS 7
-        contentViewParent = [self.subviews objectAtIndex:0];
+        contentViewParent = (self.subviews)[0];
         clipViewParent = self;
     }
     NSArray *cellSubviews = [contentViewParent subviews];
@@ -174,6 +174,7 @@ static NSString * const kTableViewCellContentView = @"UITableViewCellContentView
                                [NSLayoutConstraint constraintWithItem:buttonView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationLessThanOrEqual toItem:self.contentView attribute:NSLayoutAttributeWidth multiplier:1.0 constant:-kUtilityButtonWidthDefault],
                                ]];
     }
+    self.innerMargin = 0;
 }
 
 static NSString * const kTableViewPanState = @"state";
@@ -240,8 +241,8 @@ static NSString * const kTableViewPanState = @"state";
 {
     if (![_leftUtilityButtons sw_isEqualToButtons:leftUtilityButtons]) {
         _leftUtilityButtons = leftUtilityButtons;
-        
-        self.leftUtilityButtonsView.utilityButtons = leftUtilityButtons;
+
+        [self.leftUtilityButtonsView setUtilityButtons:leftUtilityButtons WithButtonWidth:kUtilityButtonWidthDefault innerMargin:self.innerMargin];
 
         [self.leftUtilityButtonsView layoutIfNeeded];
         [self layoutIfNeeded];
@@ -251,8 +252,8 @@ static NSString * const kTableViewPanState = @"state";
 - (void)setLeftUtilityButtons:(NSArray *)leftUtilityButtons WithButtonWidth:(CGFloat) width
 {
     _leftUtilityButtons = leftUtilityButtons;
-    
-    [self.leftUtilityButtonsView setUtilityButtons:leftUtilityButtons WithButtonWidth:width];
+
+    [self.leftUtilityButtonsView setUtilityButtons:leftUtilityButtons WithButtonWidth:width innerMargin:self.innerMargin];
 
     [self.leftUtilityButtonsView layoutIfNeeded];
     [self layoutIfNeeded];
@@ -262,8 +263,8 @@ static NSString * const kTableViewPanState = @"state";
 {
     if (![_rightUtilityButtons sw_isEqualToButtons:rightUtilityButtons]) {
         _rightUtilityButtons = rightUtilityButtons;
-        
-        self.rightUtilityButtonsView.utilityButtons = rightUtilityButtons;
+
+        [self.rightUtilityButtonsView setUtilityButtons:rightUtilityButtons WithButtonWidth:kUtilityButtonWidthDefault innerMargin:self.innerMargin];
 
         [self.rightUtilityButtonsView layoutIfNeeded];
         [self layoutIfNeeded];
@@ -274,7 +275,7 @@ static NSString * const kTableViewPanState = @"state";
 {
     _rightUtilityButtons = rightUtilityButtons;
     
-    [self.rightUtilityButtonsView setUtilityButtons:rightUtilityButtons WithButtonWidth:width];
+    [self.rightUtilityButtonsView setUtilityButtons:rightUtilityButtons WithButtonWidth:width innerMargin:self.innerMargin];
 
     [self.rightUtilityButtonsView layoutIfNeeded];
     [self layoutIfNeeded];
