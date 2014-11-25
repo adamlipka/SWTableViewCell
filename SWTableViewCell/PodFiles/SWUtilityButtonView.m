@@ -117,7 +117,7 @@
                                                                        views:NSDictionaryOfVariableBindings(precedingView)]];
     }
     
-    self.widthConstraint.constant = (width * utilityButtons.count + margin * (utilityButtons.count + 1));
+    self.widthConstraint.constant = (width * utilityButtons.count + margin * utilityButtons.count);
     
     [self setNeedsLayout];
     
