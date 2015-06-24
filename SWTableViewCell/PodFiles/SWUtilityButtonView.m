@@ -136,7 +136,9 @@
 
         for (UIButton *button in self.utilityButtons)
         {
-            [self.buttonBackgroundColors addObject:button.backgroundColor];
+            if (button.backgroundColor) {
+                [self.buttonBackgroundColors addObject:button.backgroundColor];
+            }
         }
     }
 }
